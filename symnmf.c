@@ -245,44 +245,4 @@ void symnmfc(double **h_matrix, double **norm_matrix, int n,int k,double EPS,int
 
 
 int main(){
-    /*
-    double num1,num2;
-    double *arrp,*diagp,*normp,*hp,*pointsP;
-    double **arr,**diag,**normm,**h,**points;
-    int i,j;
-    arrp = calloc(10000,sizeof(double));
-    arr = calloc(100,sizeof(double*));
-    diagp = calloc(36,sizeof(double));
-    diag = calloc(6,sizeof(double*));
-    normp = calloc(36,sizeof(double));
-    normm = calloc(6,sizeof(double*));
-    pointsP = calloc(36,sizeof(double));
-    points = calloc(6,sizeof(double*));
-    hp = calloc(200,sizeof(double));
-    h = calloc(100,sizeof(double*));
-    for (i = 0;i<6;i++){
-        diag[i] = diagp + 6*i;
-        points[i] = pointsP + 6*i;
-        normm[i] = normp + 6*i;
-    }
-    FILE *simFile;
-    simFile = fopen("input1.txt","r");
-    if (simFile == NULL){
-        printf("error reading file\n");
-    }
-    for (i = 0;i<6;i++){
-        for (j = 0;j<6;j++){
-            fscanf(simFile,"%lf,",&num1);
-            points[i][j] = num1;
-        }
-    }
-    fclose(simFile); 
-    ddgc(points,diag,6);
-    normc(diag,points,normm,6);
-    for (i = 0;i<6;i++){
-        for (j=0;j<6;j++){
-            printf("%.4f,",normm[i][j]); 
-        }
-        printf("\n");
-    }   */
 }

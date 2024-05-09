@@ -133,7 +133,6 @@ static PyObject* sym(PyObject *self,PyObject *args){
         return NULL;
     }
     k_check = PyObject_Length(PyList_GetItem(points_list,0));
-    printf("n:%d, k:%d\n",n_check,k_check);
     sym_matrixP = calloc(n_check*n_check,sizeof(double));
     if(sym_matrixP == NULL){
         printf("An error has occured!\n");
