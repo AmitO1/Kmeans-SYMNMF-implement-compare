@@ -260,15 +260,19 @@ void print_mat(double **mat,int n){
 int main(int agrc,char** argv){
     double *symP,*diagP,*normP,*vectorsP;
     double **sym,**diag,**norm,**vectors;
-    int i,j,n,dim= 0;
+    int i,j,n =0,dim= 0;
     int stop = 0;
     char ch;
     double curr;
+    FILE *fp;
+    if (agrc == 2){
+        printf("test\n");
+    }
     if (strcmp(argv[1],"sym") != 0 && strcmp(argv[1],"ddg") !=0 && strcmp(argv[1],"norm") != 0){
         printf("An error has occured!\n");
         return 0;
     }
-    FILE *fp = fopen(argv[2],"r");
+    fp = fopen(argv[2],"r");
     if (fp == NULL){
         printf("An Error Has Occured!\n");
         return 0;
@@ -415,5 +419,4 @@ int main(int agrc,char** argv){
     free(normP);
     free(norm);
     return 0;
-
 }
