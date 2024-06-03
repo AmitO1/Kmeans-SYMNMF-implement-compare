@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <string.h>
 
 double euclidean_distance(double *vector1, double* vector2,int length){
     int i;
@@ -242,7 +243,177 @@ void symnmfc(double **h_matrix, double **norm_matrix, int n,int k,double EPS,int
     free(ht_matrixP);
     free(ht_matrix);
 }
+void print_mat(double **mat,int n){
+    int i,j;
+    for (i = 0;i<n;i++){
+        for (j = 0;j<n;j++){
+            if (j != n-1){
+                printf("%.4f,",mat[i][j]);
+            }
+            else{
+                printf("%.4f\n",mat[i][j]);
+            }
+        }
+    } 
+}
 
+int main(int agrc,char** argv){
+    double *symP,*diagP,*normP,*vectorsP;
+    double **sym,**diag,**norm,**vectors;
+    int i,j,n,dim= 0;
+    int stop = 0;
+    char ch;
+    double curr;
+    if (strcmp(argv[1],"sym") != 0 && strcmp(argv[1],"ddg") !=0 && strcmp(argv[1],"norm") != 0){
+        printf("An error has occured!\n");
+        return 0;
+    }
+    FILE *fp = fopen(argv[2],"r");
+    if (fp == NULL){
+        printf("An Error Has Occured!\n");
+        return 0;
+    }
+    while(!feof(fp))
+    {
+        fscanf(fp,"%lf%c",&curr,&ch);
+        if (stop == 0){
+            dim++;
+        }
+        if(ch == '\n')
+        {
+            stop = 1;
+            n++;
+        }
+    }
+    n++;
+    printf("Vectors: %d, Dimension: %d\n",n, dim);
+    printf("Vectors: %d, Dimension: %d\n",n, dim);
+    rewind(fp);
+    vectorsP = calloc(n*dim,sizeof(double));
+    if (vectorsP == NULL){
+        printf("An Error Has Occured!\n");
+        return 0;
+    }
+    vectors = calloc(n,sizeof(double*));
+    if (vectorsP == NULL){
+        free(vectorsP);
+        printf("An Error Has Occured!\n");
+        return 0;
+    }
+    for(i = 0;i<n;i++){
+        vectors[i] = vectorsP + dim*i;
+    }
+    i = 0,j=0;
+    while(!feof(fp)){
+        fscanf(fp,"%lf%c",&curr,&ch);
+        if(ch == '\n'){
+            vectors[i][j] = curr;
+            i++;
+            j = 0;
+            continue;
+        }
+        vectors[i][j] = curr;
+        j++;
+    }  
+    fclose(fp);
+    symP = calloc(n*n,sizeof(double));
+    if (symP == NULL){
+        free(vectorsP);
+        free(vectors);
+        printf("An error has occured!\n");
+        return 0;
+    }
+    sym = calloc(n,sizeof(double*));
+    if (sym == NULL){
+        free(vectorsP);
+        free(vectors);
+        free(symP);
+        printf("An error has occured!\n");
+        return 0;   
+    }
+    for (i =0;i<n;i++){
+        sym[i] = symP + i*n;
+    }
+    symc(sym,vectors,n,dim);
+    if (strcmp(argv[1],"sym") == 0){
+        print_mat(sym,n);
+        free(vectorsP);
+        free(vectors);
+        free(symP);
+        free(sym);
+        return 0;
+    }
+    diagP = calloc(n*n,sizeof(double));
+    if (symP == NULL){
+        free(symP);
+        free(sym);
+        free(vectorsP);
+        free(vectors);
+        printf("An error has occured!\n");
+        return 0;
+    }
+    diag = calloc(n,sizeof(double*));
+    if (diag == NULL){
+        free(symP);
+        free(sym);
+        free(vectorsP);
+        free(vectors);
+        free(diagP);
+        printf("An error has occured!\n");
+        return 0;   
+    }
+    for (i =0;i<n;i++){
+        diag[i] = diagP + i*n;
+    }
+    ddgc(sym,diag,n);
+    if (strcmp(argv[1],"ddg") == 0){
+        print_mat(diag,n);
+        free(symP);
+        free(sym);
+        free(vectorsP);
+        free(vectors);
+        free(diagP);
+        free(diag);
+        return 0;   
+    }
+    normP = calloc(n*n,sizeof(double));
+    if (normP == NULL){
+        free(symP);
+        free(sym);
+        free(vectorsP);
+        free(vectors);
+        free(diagP);
+        free(diag);
+        printf("An error has occured!\n");
+        return 0;
+    }
+    norm = calloc(n,sizeof(double*));
+    if (norm == NULL){
+        free(symP);
+        free(sym);
+        free(vectorsP);
+        free(vectors);
+        free(diagP);
+        free(diagP);
+        free(diag);
+        free(normP);
+        printf("An error has occured!\n");
+        return 0;   
+    }
+    for (i =0;i<n;i++){
+        norm[i] = normP + i*n;
+    }
+    normc(diag,sym,norm,n);
+    print_mat(norm,n);
+    free(symP);
+    free(sym);
+    free(vectorsP);
+    free(vectors);
+    free(diagP);
+    free(diagP);
+    free(diag);
+    free(normP);
+    free(norm);
+    return 0;
 
-int main(){
 }
