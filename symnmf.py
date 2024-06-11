@@ -8,12 +8,11 @@ import mysymnmf as sy
 def print_result(result):
     for i in range(len(result)):
         for j in range(len(result[i])):
-            if (j != len(result) -1):
+            if (j != len(result[i]) -1):
                 sys.stdout.write(f"{result[i][j]:.4f},")
             else:
                 sys.stdout.write(f"{result[i][j]:.4f}")
         print()
-
 
 num_args = len(sys.argv) - 1
 if(num_args == 3):
