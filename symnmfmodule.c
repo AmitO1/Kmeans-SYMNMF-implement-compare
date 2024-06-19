@@ -23,24 +23,28 @@ static PyObject* norm(PyObject *self, PyObject *args){
     sym_matrixP = calloc(n_check*n_check,sizeof(double));
     if (sym_matrixP == NULL){
         printf("An error has occured!\n");
+        return NULL;
     }
     sym_matrix = calloc(n_check,sizeof(double*));
     if (sym_matrix == NULL){
         free(sym_matrixP);
         printf("An error has occured!\n");
+        return NULL;
     }
     diag_matrixP = calloc(n_check*n_check,sizeof(double));
     if (diag_matrixP == NULL){
         free(sym_matrixP);
         free(sym_matrix);
         printf("An error has occured!\n");
+        return NULL;
     }
     diag_matrix = calloc(n_check,sizeof(double*));
     if (diag_matrix == NULL){
         free(sym_matrixP);
         free(sym_matrix);
         free(diag_matrixP);
-        printf("An error has occured!\n");       
+        printf("An error has occured!\n");
+        return NULL;       
     }
     norm_matrixP = calloc(n_check*n_check,sizeof(double));
     if (norm_matrixP == NULL){
@@ -49,6 +53,7 @@ static PyObject* norm(PyObject *self, PyObject *args){
         free(diag_matrixP);
         free(diag_matrix);
         printf("An error has occured!\n");
+        return NULL;
     }
     norm_matrix = calloc(n_check,sizeof(double*));
     if (norm_matrix == NULL){
@@ -57,7 +62,8 @@ static PyObject* norm(PyObject *self, PyObject *args){
         free(diag_matrixP);
         free(diag_matrix);
         free(norm_matrixP);
-        printf("An error has occured!\n");        
+        printf("An error has occured!\n");
+        return NULL;        
     }
     for (i = 0;i<n_check;i++){
         sym_matrix[i] = sym_matrixP + i*n_check;
@@ -72,7 +78,8 @@ static PyObject* norm(PyObject *self, PyObject *args){
         free(diag_matrix);
         free(norm_matrixP);
         free(norm_matrix);
-        printf("An error has occured!\n");          
+        printf("An error has occured!\n"); 
+        return NULL;         
     }
     points_matrix = calloc(n_check,sizeof(double*));
     if (points_matrix == NULL){
@@ -83,7 +90,8 @@ static PyObject* norm(PyObject *self, PyObject *args){
         free(norm_matrixP);
         free(norm_matrix);
         free(points_matrixP);
-        printf("An error has occured!\n");          
+        printf("An error has occured!\n");   
+        return NULL;       
     }
     for (i =0;i<n_check;i++){
         points_matrix[i] = points_matrixP + i*k_check;
@@ -136,11 +144,13 @@ static PyObject* sym(PyObject *self,PyObject *args){
     sym_matrixP = calloc(n_check*n_check,sizeof(double));
     if(sym_matrixP == NULL){
         printf("An error has occured!\n");
+        return NULL;
     }
     sym_matrix = calloc(n_check,sizeof(double*));
     if (sym_matrix == NULL){
         free(sym_matrixP);
         printf("An error has occured!\n");
+        return NULL;
     }
     for (i = 0;i<n_check;i++){
         sym_matrix[i] = sym_matrixP + i*n_check;
@@ -150,6 +160,7 @@ static PyObject* sym(PyObject *self,PyObject *args){
         free(sym_matrixP);
         free(sym_matrix);
         printf("An error has occured!\n");
+        return NULL;
     }
     points_matrix = calloc(n_check,sizeof(double*));
     if (points_matrix == NULL){
@@ -157,6 +168,7 @@ static PyObject* sym(PyObject *self,PyObject *args){
         free(sym_matrix);
         free(points_matrixP);
         printf("An error has occured!\n");
+        return NULL;
     }
     for (i =0;i<n_check;i++){
         points_matrix[i] = points_matrixP + i*k_check;
@@ -204,17 +216,20 @@ static PyObject* ddg(PyObject *self, PyObject *args){
     diag_matrixP = calloc(n_check*n_check,sizeof(double));
     if (diag_matrixP == NULL){
         printf("An error has occured!\n");
+        return NULL;
     }
     diag_matrix = calloc(n_check,sizeof(double*));
     if (diag_matrix == NULL){
         free(diag_matrixP);
         printf("An error has occured!\n");
+        return NULL;
     }
     sym_matrixP = calloc(n_check*n_check,sizeof(double));
     if (sym_matrixP == NULL){
         free(diag_matrixP);
         free(diag_matrix);
         printf("An error has occured!\n");
+        return NULL;
     }
     sym_matrix = calloc(n_check,sizeof(double*));
     if (sym_matrix == NULL){
@@ -222,6 +237,7 @@ static PyObject* ddg(PyObject *self, PyObject *args){
         free(diag_matrix);
         free(sym_matrixP);
         printf("An error has occured!\n");
+        return NULL;
     }
     for(i=0;i<n_check;i++){
         diag_matrix[i] = diag_matrixP + i*n_check;
@@ -234,6 +250,7 @@ static PyObject* ddg(PyObject *self, PyObject *args){
         free(sym_matrixP);
         free(sym_matrix);
         printf("An error has occured!\n");
+        return NULL;
     }
     points_matrix = calloc(n_check,sizeof(double*));
     if (points_matrix == NULL){
@@ -243,6 +260,7 @@ static PyObject* ddg(PyObject *self, PyObject *args){
         free(sym_matrix);
         free(points_matrixP);
         printf("An error has occured!\n");
+        return NULL;
     }
     for(i=0;i<n_check;i++){
         points_matrix[i] = points_matrixP + i*k_check;
@@ -292,11 +310,13 @@ static PyObject* symnmf(PyObject *self, PyObject *args){
     h_matP = calloc(n_check*k_check,sizeof(double));
     if (h_matP == NULL){
         printf("An error has occured!\n");
+        return NULL;
     }
     h_mat = calloc(n_check,sizeof(double*));
     if (h_mat == NULL){
         free(h_matP);
         printf("An error has occured!\n");
+        return NULL;
     }
     for (i =0;i<n_check;i++){
         h_mat[i] = h_matP +i*k_check;
@@ -306,6 +326,7 @@ static PyObject* symnmf(PyObject *self, PyObject *args){
         free(h_matP);
         free(h_mat);
         printf("An error has occured!\n");
+        return NULL;
     }
     w_mat = calloc(n_check,sizeof(double*));
     if (w_mat == NULL){
@@ -313,6 +334,7 @@ static PyObject* symnmf(PyObject *self, PyObject *args){
         free(h_mat);
         free(w_matP);
         printf("An error has occured!\n");
+        return NULL;
     }
     for (i =0;i<n_check;i++){
         w_mat[i] = w_matP + i*n_check;

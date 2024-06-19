@@ -1,8 +1,8 @@
-
 import sys
 import pandas as pd
 import numpy as np
 import math
+import os
 import mysymnmf as sy
 
 def print_result(result):
@@ -18,9 +18,17 @@ num_args = len(sys.argv) - 1
 if(num_args == 3):
     k = (int)(sys.argv[1])
     goal = sys.argv[2]
+    check = os.path.isfile(sys.argv[3])
+    if not (check):
+        print("An error has occured!")
+        exit()
     txtFile = sys.argv[3]
 elif(num_args == 2):
     goal = sys.argv[1]
+    check = os.path.isfile(sys.argv[2])
+    if not (check):
+        print("An error has occured!")
+        exit()
     txtFile = sys.argv[2] 
 else:
     print("An error has occured!")

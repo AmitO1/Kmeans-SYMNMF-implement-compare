@@ -109,7 +109,7 @@ kmeans_silhouette_score = f"{kmeans_silhouette_score:.4f}"
 cluster_labels_H = np.argmax(H_result, axis=1)
 symnmf_silhouette_score = silhouette_score(vectorsArray, cluster_labels_H)
 symnmf_silhouette_score = f"{symnmf_silhouette_score:.4f}"
-print("nmf: ", symnmf_silhouette_score)
-print("kmeans: ", kmeans_silhouette_score)
+print("nmf:", symnmf_silhouette_score)
+print("kmeans:", kmeans_silhouette_score)
         
 
