@@ -15,11 +15,13 @@ static PyObject* norm(PyObject *self, PyObject *args){
     if (!PyArg_ParseTuple(args,"O",&points_list)){
         return NULL;
     }
+    /*find vectors amount and dimension for memory allocating*/
     n_check = PyObject_Length(points_list);
     if (n_check < 0){
         return NULL;
     }
     k_check = PyObject_Length(PyList_GetItem(points_list,0));
+    /*allocate memory for matrixed needed for send to C function*/
     sym_matrixP = calloc(n_check*n_check,sizeof(double));
     if (sym_matrixP == NULL){
         printf("An error has occured!\n");
@@ -96,6 +98,7 @@ static PyObject* norm(PyObject *self, PyObject *args){
     for (i =0;i<n_check;i++){
         points_matrix[i] = points_matrixP + i*k_check;
     }
+    /*get vectors inside C matrix from vectors recieved from python*/
     for(i=0;i<n_check;i++){
         for(j =0;j<k_check;j++){
             item1 = PyList_GetItem(PyList_GetItem(points_list,i),j);
@@ -103,9 +106,11 @@ static PyObject* norm(PyObject *self, PyObject *args){
             points_matrix[i][j] = num;
         }
     }
+    /*run needed c function in order to get the matrixes needed to calculate norm matrix*/
     symc(sym_matrix,points_matrix,n_check,k_check);
     ddgc(sym_matrix,diag_matrix,n_check);
     normc(diag_matrix,sym_matrix,norm_matrix,n_check);
+    /*transfer c matrix to python list and return norm matrix*/
     norma_matrix = PyList_New(n_check);
     for (i=0;i<n_check;i++){
         norma_row = PyList_New(n_check);
@@ -136,11 +141,13 @@ static PyObject* sym(PyObject *self,PyObject *args){
     if (!PyArg_ParseTuple(args,"O",&points_list)){
         return NULL;
     }
+    /*finding the needed matrix size according to the vectors recieved from python*/
     n_check = PyObject_Length(points_list);
     if (n_check < 0){
         return NULL;
     }
     k_check = PyObject_Length(PyList_GetItem(points_list,0));
+    /*allocate memory for matrixes needed for the similarity matrix*/
     sym_matrixP = calloc(n_check*n_check,sizeof(double));
     if(sym_matrixP == NULL){
         printf("An error has occured!\n");
@@ -173,6 +180,7 @@ static PyObject* sym(PyObject *self,PyObject *args){
     for (i =0;i<n_check;i++){
         points_matrix[i] = points_matrixP + i*k_check;
     }
+    /*update the points matrix according to the vecotrs list recived from python*/
     for(i=0;i<n_check;i++){
         for(j =0;j<k_check;j++){
             item1 = PyList_GetItem(PyList_GetItem(points_list,i),j);
@@ -180,6 +188,7 @@ static PyObject* sym(PyObject *self,PyObject *args){
             points_matrix[i][j] = num;
         }
     }
+    /*run the symc function from c and then update the sy_matrix in order to return for python*/
     symc(sym_matrix,points_matrix,n_check,k_check);
     sy_matrix = PyList_New(n_check);
     for (i=0;i<n_check;i++){
@@ -208,11 +217,13 @@ static PyObject* ddg(PyObject *self, PyObject *args){
     if (!PyArg_ParseTuple(args,"O",&points_list)){
         return NULL;
     }
+    /*find vectors dimension and amount*/
     n_check = PyObject_Length(points_list);
     if (n_check < 0){
         return NULL;
     }
     k_check = PyObject_Length(PyList_GetItem(points_list,0));
+    /*allocate memory needed for each matrix*/
     diag_matrixP = calloc(n_check*n_check,sizeof(double));
     if (diag_matrixP == NULL){
         printf("An error has occured!\n");
@@ -265,6 +276,7 @@ static PyObject* ddg(PyObject *self, PyObject *args){
     for(i=0;i<n_check;i++){
         points_matrix[i] = points_matrixP + i*k_check;
     }
+    /*fill points matrix from points recieved from python list*/
     for(i=0;i<n_check;i++){
         for(j =0;j<k_check;j++){
             item1 = PyList_GetItem(PyList_GetItem(points_list,i),j);
@@ -272,8 +284,10 @@ static PyObject* ddg(PyObject *self, PyObject *args){
             points_matrix[i][j] = num;
         }
     }
+    /*calculate the similarity matrix and diagonal matrix*/
     symc(sym_matrix,points_matrix,n_check,k_check);
     ddgc(sym_matrix,diag_matrix,n_check);
+    /*transfer the diagonal matrix from C matrix to python list and return it*/
     w_matrix = PyList_New(n_check);
     for (i=0;i<n_check;i++){
         w_row = PyList_New(n_check);
@@ -301,12 +315,14 @@ static PyObject* symnmf(PyObject *self, PyObject *args){
     if (!PyArg_ParseTuple(args,"OOid",&h_matrix,&w_matrix,&iter,&EPS)){
         return NULL;
     }
+    /*find vectors amount and dimension*/
     n_check = PyObject_Length(h_matrix);
     check2 = PyObject_Length(w_matrix);
     if (n_check < 0 || check2 < 0){
         return NULL;
     }
     k_check = PyObject_Length(PyList_GetItem(h_matrix,0));
+    /*allocate memory for needed matrixes for the calculation*/
     h_matP = calloc(n_check*k_check,sizeof(double));
     if (h_matP == NULL){
         printf("An error has occured!\n");
@@ -339,6 +355,7 @@ static PyObject* symnmf(PyObject *self, PyObject *args){
     for (i =0;i<n_check;i++){
         w_mat[i] = w_matP + i*n_check;
     }
+    /*tansfer initial H and W values from python list to C matrix and find the final H*/
     for (i =0;i<n_check;i++){
         for (j = 0;j<n_check;j++){
             item1 = PyList_GetItem(PyList_GetItem(w_matrix,i),j);
@@ -354,6 +371,7 @@ static PyObject* symnmf(PyObject *self, PyObject *args){
         }
     }
     symnmfc(h_mat,w_mat,n_check,k_check,EPS,iter);
+    /*transfer final H from C matrix to python list*/
     for (i =0;i<n_check;i++){
         for (j = 0;j<k_check;j++){
             item1 = PyFloat_FromDouble(h_mat[i][j]);

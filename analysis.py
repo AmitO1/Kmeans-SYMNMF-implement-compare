@@ -1,10 +1,12 @@
 import math
 import sys
+import os
 import pandas as pd
 import mysymnmf as sy
 import numpy as np
 from sklearn.metrics import silhouette_score
 
+#function to assign the correct label for each cluster after kmeans algorithm
 def assign_labels(X, cluster_centers):
     X = np.array(X)
     cluster_centers = np.array(cluster_centers)
@@ -27,10 +29,12 @@ def print_result(result):
                 sys.stdout.write(f"{result[i][j]:.4f}")
         print()
 
+#used in Kmeans
 def isNatural(number):
         if (number - math.floor(number) == 0):
                 return True
         return False
+#used in Kmeans
 def euclideanDistance(vector1,vector2):
         sum =0
         distance =0
@@ -38,7 +42,7 @@ def euclideanDistance(vector1,vector2):
                 distance = (vector1[i]-vector2[i])
                 sum += math.pow(distance,2)
         return math.sqrt(sum)
-
+#used in Kmeans
 def closestCluster (kCluster,vector):
         index = -1
         minDis = 0
@@ -57,13 +61,28 @@ def closestCluster (kCluster,vector):
 num_args = len(sys.argv) - 1
 EPS = 0.0001
 iterNum = 300
+
 if(num_args == 2):
-    K = (int)(sys.argv[1])
-    txtFile = sys.argv[2]
+        K = (int)(sys.argv[1])
+        txtFile = sys.argv[2]
+        check = os.path.isfile(txtFile)
+        if not (check):
+                print("An error has occured!")
+                exit()
+else:
+        print("An error has occured!")
+        exit()
+
 df1 = pd.read_csv(txtFile,sep = ",",header=None,float_precision='high')
 vectorsArray = df1.values.tolist()
+
 d = len(vectorsArray[0])
 N = len(vectorsArray)
+
+if (K >= N):
+       print("An error has occured")
+       exit()   
+#run the Kmeans algorithm from assignment 1 
 distanceSmallerThenEPS = 0
 kClusters = [[0] * d for _ in range(K)]
 num_rows = len(kClusters)
@@ -102,7 +121,8 @@ while(iterNum > 0 and distanceSmallerThenEPS == 0):
                                 tempClusters[i][j] = 0
                 totalPoints[i] = 0
         iterNum -=1
-        
+
+#find label for Kmeans and Symnmf and calculate the silhouette score     
 cluster_labels_kmean = assign_labels(vectorsArray,kClusters)
 kmeans_silhouette_score = silhouette_score(vectorsArray, cluster_labels_kmean)
 kmeans_silhouette_score = f"{kmeans_silhouette_score:.4f}"

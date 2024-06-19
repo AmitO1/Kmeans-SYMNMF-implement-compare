@@ -13,7 +13,7 @@ def print_result(result):
             else:
                 sys.stdout.write(f"{result[i][j]:.4f}")
         print()
-
+#check for correct amount of arguments and valid goal recieved from the user
 num_args = len(sys.argv) - 1
 if(num_args == 3):
     k = (int)(sys.argv[1])
@@ -50,7 +50,7 @@ elif(goal == "norm"):
     print_result(result)
 elif (goal == "symnmf"):
     if (k >= len(points)):
-        print("Invalid number of clusters!")
+        print("An error has occured!")
         exit()
     w = sy.norm(points)
     m = np.mean(w)
