@@ -67,10 +67,10 @@ if(num_args == 2):
         txtFile = sys.argv[2]
         check = os.path.isfile(txtFile)
         if not (check):
-                print("An error has occured!")
+                print("An Error Has Occurred")
                 exit()
 else:
-        print("An error has occured!")
+        print("An Error Has Occurred")
         exit()
 
 df1 = pd.read_csv(txtFile,sep = ",",header=None,float_precision='high')

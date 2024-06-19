@@ -6,13 +6,9 @@ import os
 import mysymnmf as sy
 
 def print_result(result):
-    for i in range(len(result)):
-        for j in range(len(result[i])):
-            if (j != len(result[i]) -1):
-                sys.stdout.write(f"{result[i][j]:.4f},")
-            else:
-                sys.stdout.write(f"{result[i][j]:.4f}")
-        print()
+    for row in result:
+        format_row = ["%.4f" % num for num in row]
+        print(*format_row,sep=",")
 #check for correct amount of arguments and valid goal recieved from the user
 num_args = len(sys.argv) - 1
 if(num_args == 3):
@@ -20,18 +16,18 @@ if(num_args == 3):
     goal = sys.argv[2]
     check = os.path.isfile(sys.argv[3])
     if not (check):
-        print("An error has occured!")
+        print("An Error Has Occurred")
         exit()
     txtFile = sys.argv[3]
 elif(num_args == 2):
     goal = sys.argv[1]
     check = os.path.isfile(sys.argv[2])
     if not (check):
-        print("An error has occured!")
+        print("An Error Has Occurred")
         exit()
     txtFile = sys.argv[2] 
 else:
-    print("An error has occured!")
+    print("An Error Has Occurred")
     exit()
 
 EPS = 0.0001
@@ -50,7 +46,7 @@ elif(goal == "norm"):
     print_result(result)
 elif (goal == "symnmf"):
     if (k >= len(points)):
-        print("An error has occured!")
+        print("An Error Has Occurred")
         exit()
     w = sy.norm(points)
     m = np.mean(w)
@@ -61,7 +57,7 @@ elif (goal == "symnmf"):
     print_result(result)
 
 else:
-    print("An error has occured")
+    print("An Error Has Occurred")
     exit()
 
 
