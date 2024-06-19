@@ -74,13 +74,13 @@ void normc (double **diag_matrix,double **sym_matrix,double **norm_matrix,int ro
     double *norm_repP, **norm_rep;
     norm_repP = calloc(rows*rows,sizeof(double));
     if (norm_repP == NULL){
-        printf("An Error Has Occurred!\n");
+        printf("An Error Has Occurred\n");
         return;
     }
     norm_rep = calloc(rows,sizeof(double*));
     if (norm_rep == NULL){
         free(norm_repP);
-        printf("An Error Has Occurred!\n");
+        printf("An Error Has Occurred\n");
         return;
     }
     for (i = 0 ;i<rows;i++){
@@ -150,25 +150,25 @@ void symnmfc(double **h_matrix, double **norm_matrix, int n,int k,double EPS,int
     /*memory allocating for needed matrix in order to update H*/
     h_copyP = calloc(n*k,sizeof(double));
     if (h_copyP == NULL){
-        printf("An Error Has Occurred!\n");
+        printf("An Error Has Occurred\n");
         return;
     }
     h_copy = calloc(n,sizeof(double*));
     if (h_copy == NULL){
         free(h_copyP);
-        printf("An Error Has Occurred!\n");
+        printf("An Error Has Occurred\n");
         return;
     }
     wh_matrixP = calloc(n*k,sizeof(double));
     if (wh_matrixP == NULL){
         free(h_copyP);
         free(h_copy);
-        printf("An Error Has Occurred!\n");
+        printf("An Error Has Occurred\n");
         return;
     }
     wh_matrix = calloc(n,sizeof(double*));
     if (wh_matrix == NULL){
-        printf("An Error Has Occurred!\n");
+        printf("An Error Has Occurred\n");
         free(h_copyP);
         free(h_copy);
         free(wh_matrixP);
@@ -176,7 +176,7 @@ void symnmfc(double **h_matrix, double **norm_matrix, int n,int k,double EPS,int
     }
     hhth_matrixP = calloc(n*k,sizeof(double));
     if (hhth_matrixP == NULL){
-        printf("An Error Has Occurred!\n");
+        printf("An Error Has Occurred\n");
         free(h_copyP);
         free(h_copy);
         free(wh_matrixP);
@@ -185,7 +185,7 @@ void symnmfc(double **h_matrix, double **norm_matrix, int n,int k,double EPS,int
     }
     hhth_matrix = calloc(n,sizeof(double*));
     if (hhth_matrix == NULL){
-        printf("An Error Has Occurred!\n");
+        printf("An Error Has Occurred\n");
         free(h_copyP);
         free(h_copy);
         free(wh_matrixP);
@@ -200,7 +200,7 @@ void symnmfc(double **h_matrix, double **norm_matrix, int n,int k,double EPS,int
     }
     hht_matrixP = calloc(n*n,sizeof(double));
     if (hht_matrixP == NULL){
-        printf("An Error Has Occurred!\n");
+        printf("An Error Has Occurred\n");
         free(h_copyP);
         free(h_copy);
         free(wh_matrixP);
@@ -211,7 +211,7 @@ void symnmfc(double **h_matrix, double **norm_matrix, int n,int k,double EPS,int
     }
     hht_matrix = calloc(n,sizeof(double*));
     if (hht_matrix == NULL){
-        printf("An Error Has Occurred!\n");
+        printf("An Error Has Occurred\n");
         free(h_copyP);
         free(h_copy);
         free(wh_matrixP);
@@ -226,7 +226,7 @@ void symnmfc(double **h_matrix, double **norm_matrix, int n,int k,double EPS,int
     }
     ht_matrixP = calloc(k*n,sizeof(double));
     if (ht_matrixP == NULL){
-        printf("An Error Has Occurred!\n");
+        printf("An Error Has Occurred\n");
         free(h_copyP);
         free(h_copy);
         free(wh_matrixP);
@@ -239,7 +239,7 @@ void symnmfc(double **h_matrix, double **norm_matrix, int n,int k,double EPS,int
     }
     ht_matrix = calloc(k,sizeof(double*));
     if (ht_matrix == NULL){
-        printf("An Error Has Occurred!\n");
+        printf("An Error Has Occurred\n");
         free(h_copyP);
         free(h_copy);
         free(wh_matrixP);
@@ -324,12 +324,12 @@ int main(int agrc,char** argv){
         return 1;
     }
     if (strcmp(argv[1],"sym") != 0 && strcmp(argv[1],"ddg") !=0 && strcmp(argv[1],"norm") != 0){
-        printf("An Error Has Occurred!\n");
+        printf("An Error Has Occurred\n");
         return 1;
     }
     fp = fopen(argv[2],"r");
     if (fp == NULL){
-        printf("An Error Has Occurred!\n");
+        printf("An Error Has Occurred\n");
         return 1;
     }
     while(!feof(fp))
@@ -348,13 +348,13 @@ int main(int agrc,char** argv){
     rewind(fp);
     vectorsP = calloc(n*dim,sizeof(double));
     if (vectorsP == NULL){
-        printf("An Error Has Occurred!\n");
+        printf("An Error Has Occurred\n");
         return 1;
     }
     vectors = calloc(n,sizeof(double*));
     if (vectors == NULL){
         free(vectorsP);
-        printf("An Error Has Occurred!\n");
+        printf("An Error Has Occurred\n");
         return 1;
     }
     for(i = 0;i<n;i++){
@@ -374,7 +374,7 @@ int main(int agrc,char** argv){
     if (symP == NULL){
         free(vectorsP);
         free(vectors);
-        printf("An Error Has Occurred!\n");
+        printf("An Error Has Occurred\n");
         return 1;
     }
     sym = calloc(n,sizeof(double*));
@@ -382,7 +382,7 @@ int main(int agrc,char** argv){
         free(vectorsP);
         free(vectors);
         free(symP);
-        printf("An Error Has Occurred!\n");
+        printf("An Error Has Occurred\n");
         return 1;   
     }
     for (i =0;i<n;i++){
@@ -403,7 +403,7 @@ int main(int agrc,char** argv){
         free(sym);
         free(vectorsP);
         free(vectors);
-        printf("An Error Has Occurred!\n");
+        printf("An Error Has Occurred\n");
         return 1;
     }
     diag = calloc(n,sizeof(double*));
@@ -413,7 +413,7 @@ int main(int agrc,char** argv){
         free(vectorsP);
         free(vectors);
         free(diagP);
-        printf("An Error Has Occurred!\n");
+        printf("An Error Has Occurred\n");
         return 1;  
     }
     for (i =0;i<n;i++){
@@ -438,7 +438,7 @@ int main(int agrc,char** argv){
         free(vectors);
         free(diagP);
         free(diag);
-        printf("An Error Has Occurred!\n");
+        printf("An Error Has Occurred\n");
         return 1;
     }
     norm = calloc(n,sizeof(double*));
@@ -450,7 +450,7 @@ int main(int agrc,char** argv){
         free(diagP);
         free(diag);
         free(normP);
-        printf("An Error Has Occurred!\n");
+        printf("An Error Has Occurred\n");
         return 1;   
     }
     for (i =0;i<n;i++){
